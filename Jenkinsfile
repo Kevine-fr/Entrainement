@@ -54,8 +54,8 @@ pipeline {
         stage('Enable NPM command') {
             steps {
                 script {
-                    // Exécuter la commande de développement avec Vite
-                    bat 'npm run dev'
+                    // Définir LARAVEL_BYPASS_ENV_CHECK pour contourner la vérification
+                    bat 'set LARAVEL_BYPASS_ENV_CHECK=1 && npm run dev'
                 }
             }
         }
