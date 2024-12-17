@@ -47,5 +47,12 @@ pipeline {
                 }
             }
         }
+        stage('Enable NPM command') {
+            steps {
+                script {
+                    bat 'npm run dev'
+                }
+            }
+        }
     }
 }
