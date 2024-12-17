@@ -27,10 +27,8 @@ COPY . .
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-interaction
 
-# Configurer le serveur PHP-FPM
-CMD ["php-fpm"]
-
-# Exposer le port 9000
-EXPOSE 9000
+# Exposer le port 8000
+EXPOSE 8000
 
 # Ajouter le script de démarrage (si nécessaire)
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
