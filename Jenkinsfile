@@ -33,16 +33,6 @@ pipeline {
                 }
             }
         }
-        stage('Build and Deploy Application') {
-            steps {
-                script {
-                    bat 'powershell -Command "(Get-Content .env) -replace \'^DB_HOST=.*\', \'DB_HOST=db\' | Set-Content .env"'
-
-                    bat 'docker-compose build app'
-                    bat 'docker-compose up -d app'
-                }
-            }
-        }
         stage('Install NPM Dependencies') {
             steps {
                 script {
@@ -51,11 +41,13 @@ pipeline {
                 }
             }
         }
-        stage('Enable NPM command') {
+        stage('Build and Deploy Application') {
             steps {
                 script {
-                    // Définir LARAVEL_BYPASS_ENV_CHECK pour contourner la vérification
-                    bat 'set LARAVEL_BYPASS_ENV_CHECK=1 && npm run dev'
+                    bat 'powershell -Command "(Get-Content .env) -replace \'^DB_HOST=.*\', \'DB_HOST=db\' | Set-Content .env"'
+
+                    bat 'docker-compose build app'
+                    bat 'docker-compose up -d app'
                 }
             }
         }
