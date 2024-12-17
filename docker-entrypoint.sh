@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Ajouter node_modules/.bin au PATH
-export PATH=/var/www/html/node_modules/.bin:$PATH
+# export PATH=/var/www/html/node_modules/.bin:$PATH
 
 # Installer les dépendances Node.js (au cas où elles n'auraient pas été installées)
 npm install
