@@ -9,9 +9,7 @@ pipeline {
         stage('Build and Deploy DataBase') {
             steps {
                 script {
-                    // Construisez les images Docker avant de dÃ©marrer les conteneurs
-                    // bat 'docker-compose build'
-                    
+                    // Construisez les images Docker avant de démarrer les conteneurs
                     bat 'docker-compose up -d db phpmyadmin'
                 }
             }
@@ -19,13 +17,13 @@ pipeline {
         stage('Build and Install Dependencies') {
             steps {
                 script {
-                    // Assurez-vous que Composer est installÃ© dans l'image Docker ou l'agent
+                    // Assurez-vous que Composer est installé dans l'image Docker ou l'agent
                     bat 'composer install'
                     
                     // Utilisez la commande copy pour Windows
                     bat 'copy .env.example .env'
                     
-                    // ExÃ©cutez les commandes Artisan
+                    // Exécutez les commandes Artisan
                     bat 'php artisan key:generate'
                     
                     bat 'powershell -Command "(Get-Content .env) -replace \'^DB_PASSWORD=.*\', \'DB_PASSWORD=password\' | Set-Content .env"'
@@ -38,18 +36,25 @@ pipeline {
         stage('Build and Deploy Application') {
             steps {
                 script {
-                    
                     bat 'powershell -Command "(Get-Content .env) -replace \'^DB_HOST=.*\', \'DB_HOST=db\' | Set-Content .env"'
 
                     bat 'docker-compose build app'
-                    
                     bat 'docker-compose up -d app'
+                }
+            }
+        }
+        stage('Install NPM Dependencies') {
+            steps {
+                script {
+                    // Installer les dépendances NPM avant d'exécuter la commande dev
+                    bat 'npm install'
                 }
             }
         }
         stage('Enable NPM command') {
             steps {
                 script {
+                    // Exécuter la commande de développement avec Vite
                     bat 'npm run dev'
                 }
             }
