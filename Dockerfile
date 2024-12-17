@@ -1,7 +1,7 @@
-# Utiliser l'image PHP 8.2-fpm
+# Utiliser l'image de base PHP
 FROM php:8.2-fpm
 
-# Installer les dépendances PHP nécessaires
+# Mettre à jour les paquets et installer les dépendances nécessaires
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -16,31 +16,21 @@ RUN apt-get update && apt-get install -y \
     gnupg2 \
     lsb-release
 
-# Installer Node.js et NPM
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs
+# Copiez le fichier .env dans le conteneur
+COPY .env /var/www/.env
 
-# Installer Composer
+# Copier les fichiers de l'application dans le répertoire de travail
+WORKDIR /var/www
+COPY . .
+
+# Installer les dépendances PHP via Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install --no-interaction
 
-# Installer les extensions PHP nécessaires
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
-    docker-php-ext-install gd pdo pdo_mysql zip
+# Configurer le serveur PHP-FPM
+CMD ["php-fpm"]
 
-# Copier le fichier d'entrée du conteneur
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+# Exposer le port 9000
+EXPOSE 9000
 
-# Rendre le fichier docker-entrypoint.sh exécutable
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-# Définir le répertoire de travail
-WORKDIR /var/www/html
-
-# Exposer le port 8000
-EXPOSE 8000
-
-# Définir l'entrée du conteneur
-ENTRYPOINT ["docker-entrypoint.sh"]
-
-# Commande par défaut si aucun autre argument n'est fourni
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# Ajouter le script de démarrage (si nécessaire)
