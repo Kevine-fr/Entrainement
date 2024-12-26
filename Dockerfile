@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copie le fichier .env dans le conteneur
-COPY .env /var/www/.env
+COPY .env.example /var/www/.env
 
 # Copier les fichiers de l'application dans le répertoire de travail
 WORKDIR /var/www
