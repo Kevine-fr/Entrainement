@@ -16,10 +16,10 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
-# Installer le driver PostgreSQL pour PHP
+# Installer les extensions PHP nécessaires
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
-# Copie le fichier .env dans le conteneur
+# Copier le fichier .env dans le conteneur
 COPY .env.example /var/www/.env
 
 # Copier les fichiers de l'application dans le répertoire de travail
@@ -39,5 +39,5 @@ RUN php artisan migrate --force
 # Exposer le port 8000 pour l'accès à l'application Laravel
 EXPOSE 8000
 
-# Commande pour démarrer le serveur Laravel
+# Démarrer le serveur Laravel
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
