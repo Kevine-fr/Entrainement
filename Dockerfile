@@ -6,7 +6,8 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libfreetype6-dev \
     libzip-dev \
-    libpq-dev \  # Ce paquet est nécessaire pour PostgreSQL
+    libpq-dev \  
+    # Ce paquet est nécessaire pour PostgreSQL
     # libonig-dev \
     git \
     unzip \
