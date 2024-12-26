@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libzip-dev \
     libpq-dev \  # Ce paquet est nécessaire pour PostgreSQL
-    libonig-dev \
+    # libonig-dev \
     git \
     unzip \
     libxml2-dev \
