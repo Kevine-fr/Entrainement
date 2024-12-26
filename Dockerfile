@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libfreetype6-dev \
     libzip-dev \
-    libpq-dev \
+    libpq-dev \  # Ce paquet est nécessaire pour PostgreSQL
     libonig-dev \
     git \
     unzip \
@@ -16,10 +16,10 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
-# Installer l'extension pdo_mysql pour MySQL
-RUN docker-php-ext-install pdo pdo_mysql
+# Installer le driver PostgreSQL pour PHP
+RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
-# Copier le fichier .env dans le conteneur
+# Copie le fichier .env dans le conteneur
 COPY .env.example /var/www/.env
 
 # Copier les fichiers de l'application dans le répertoire de travail
