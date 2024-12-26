@@ -16,7 +16,10 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
-# Copie le fichier .env dans le conteneur
+# Installer l'extension pdo_mysql pour MySQL
+RUN docker-php-ext-install pdo pdo_mysql
+
+# Copier le fichier .env dans le conteneur
 COPY .env.example /var/www/.env
 
 # Copier les fichiers de l'application dans le répertoire de travail
