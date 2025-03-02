@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\EtudiantController;
-use App\Http\Controllers\AnneescolaireController;
+use App\Http\Controllers\AnneeScolaireController;
 use App\Http\Controllers\ProfesseurCoursController;
-use App\Http\Controllers\ClasseAnneescolaireController;
+use App\Http\Controllers\ClasseAnneeScolaireController;
 use App\Http\Controllers\SalleController;
 use App\Http\Controllers\CoursController;
 use App\Http\Controllers\ProfesseurController;
