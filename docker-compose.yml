@@ -1,22 +1,6 @@
 version: '3.8'
 
 services:
-  # Service MySQL
-  # db:
-  #   image: mysql:5.7
-  #   container_name: mysql
-  #   volumes:
-  #     - db_data:/var/lib/mysql
-  #   restart: unless-stopped
-  #   ports:
-  #     - "3306:3306"
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: password
-  #     MYSQL_DATABASE: studlearn
-  #     MYSQL_USER: root
-  #     MYSQL_PASSWORD: password
-  #   networks:
-  #     - backend
 
     # Service MySQL
   db:
@@ -28,10 +12,9 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: password  # Définit un mot de passe pour l'utilisateur root
-      MYSQL_DATABASE: studlearn     # Nom de la base de données à créer
-      # Supprimer la ligne suivante : MYSQL_USER: root
-      MYSQL_PASSWORD: password     # Le mot de passe de l'utilisateur root (optionnel)
+      MYSQL_ROOT_PASSWORD: password  
+      MYSQL_DATABASE: studlearn     
+      MYSQL_PASSWORD: password    
     networks:
       - backend
 
@@ -70,9 +53,6 @@ services:
       DB_DATABASE: studlearn
       DB_USERNAME: root
       DB_PASSWORD: password
-    # volumes:
-    #   - .:/var/www
-    #   - .:/var/www/vendor
     networks:
       - backend
 

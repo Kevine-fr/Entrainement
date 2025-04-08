@@ -18,5 +18,5 @@ Le fichier `.devcontainer/devcontainer.json` contient la configuration suivante 
   "features": {
     "ghcr.io/devcontainers-extra/features/composer:1": {}
   },
-  "postCreateCommand": "./scripts/init.sh"
+  "postCreateCommand": "cp .env.example .env && php artisan key:generate && composer install"
 }
