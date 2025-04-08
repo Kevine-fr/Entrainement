@@ -454,7 +454,7 @@ button[type="submit"]:hover {
                     @endforeach
                     @else
                         <div class="d-flex justify-content-center text-secondary py-2">
-                            Aucun année n'a été enregistrer !
+                            Aucune année n'a été enregistrer !
                         </div>
                     @endif
                 </div>

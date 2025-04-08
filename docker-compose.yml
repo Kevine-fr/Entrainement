@@ -2,29 +2,63 @@ version: '3.8'
 
 services:
   # Service MySQL
+  # db:
+  #   image: mysql:5.7
+  #   container_name: mysql
+  #   volumes:
+  #     - db_data:/var/lib/mysql
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: password
+  #     MYSQL_DATABASE: studlearn
+  #     MYSQL_USER: root
+  #     MYSQL_PASSWORD: password
+  #   networks:
+  #     - backend
+
+    # Service MySQL
   db:
     image: mysql:5.7
     container_name: mysql
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
+    restart: unless-stopped
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: studlearn
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password  # Définit un mot de passe pour l'utilisateur root
+      MYSQL_DATABASE: studlearn     # Nom de la base de données à créer
+      # Supprimer la ligne suivante : MYSQL_USER: root
+      MYSQL_PASSWORD: password     # Le mot de passe de l'utilisateur root (optionnel)
     networks:
-      - mysql-phpmyadmin
+      - backend
 
+
+  # phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8090:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: password
+    networks:
+      - backend
+  
   # Application Laravel
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: studlearn
-    restart: always
+    restart: unless-stopped
     ports:
       - "8000:8000"
     depends_on:
@@ -36,27 +70,14 @@ services:
       DB_DATABASE: studlearn
       DB_USERNAME: root
       DB_PASSWORD: password
-    volumes:
-      - .:/var/www/html
+    # volumes:
+    #   - .:/var/www
+    #   - .:/var/www/vendor
     networks:
-      - mysql-phpmyadmin
-
-  # phpMyAdmin
-  phpmyadmin:
-    depends_on:
-      - db
-    image: phpmyadmin
-    restart: always
-    ports:
-      - "8090:80"
-    environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: password
-    networks:
-      - mysql-phpmyadmin
+      - backend
 
 volumes:
   db_data:
 
 networks:
-  mysql-phpmyadmin:
+  backend:
