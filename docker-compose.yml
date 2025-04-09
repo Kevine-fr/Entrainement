@@ -5,7 +5,7 @@ services:
     # Service MySQL
   db:
     image: mysql:5.7
-    container_name: mysql
+    container_name: mysql_entrainement
     volumes:
       - db_data:/var/lib/mysql
     restart: unless-stopped
@@ -13,7 +13,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: password  
-      MYSQL_DATABASE: studlearn     
+      MYSQL_DATABASE: studlearn  
       MYSQL_PASSWORD: password    
     networks:
       - backend
@@ -22,7 +22,7 @@ services:
   # phpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: phpmyadmin_entrainement
     restart: unless-stopped
     depends_on:
       - db
