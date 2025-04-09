@@ -11,7 +11,7 @@ Le fichier `.devcontainer/devcontainer.json` contient la configuration suivante 
 ```json
 {
   "name": "Entrainement Dev",
-  "dockerComposeFile": "../Entrainement/docker-compose.yml",
+  "dockerComposeFile": "../docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/var/www",
   "forwardPorts": [8000, 3306, 8080],
